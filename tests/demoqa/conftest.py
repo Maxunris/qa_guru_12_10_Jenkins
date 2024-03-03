@@ -1,13 +1,17 @@
 import pytest
-
+from utils import attach
+from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selene import Browser, Config
 
-from utils import attach
 
-@pytest.fixture(scope='function')
-def setup_browser(request):
+@pytest.fixture(scope="function", autouse=True)
+def browser_config():
+
+    browser.config.base_url = 'https://demoqa.com/'
+    browser.config.window_height = 1080
+    browser.config.window_width = 1920
+
     options = Options()
     selenoid_capabilities = {
         "browserName": "chrome",
@@ -22,9 +26,9 @@ def setup_browser(request):
         command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options
     )
+    browser.config.driver = driver
 
-    browser = Browser(Config(driver))
-    yield browser
+    yield
 
     attach.add_screenshot(browser)
     attach.add_logs(browser)
