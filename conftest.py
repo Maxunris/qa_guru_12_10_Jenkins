@@ -1,9 +1,7 @@
 import pytest
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import Browser, Config
-
 from utils import attach
 
 @pytest.fixture(scope='function')
@@ -25,12 +23,12 @@ def setup_browser(request):
 
     browser = Browser(Config(driver))
 
-    browser.config.base_url = 'https://demoqa.com'
     yield browser
 
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
-    attach.add_html(browser)
-    attach.add_video(browser)
-
-    browser.quit()
+    try:
+        attach.add_screenshot(browser)
+        attach.add_logs(browser)
+        attach.add_html(browser)
+        attach.add_video(browser)
+    finally:
+        browser.driver.quit()
