@@ -7,6 +7,7 @@ class RegistrationPage:
     @allure.step('Открытие формы регистрации')
     def open(self):
         browser.open('/automation-practice-form')
+        browser.element(".fc-button-label").click()
 
     @allure.step('Заполнение имени')
     def fill_first_name(self, first_name):
