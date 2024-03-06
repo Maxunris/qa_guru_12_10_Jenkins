@@ -1,4 +1,5 @@
 from demoqa_tests.pages.registration_page import RegistrationPage
+from utils import attach
 
 
 def test_user_registration_form():
@@ -31,3 +32,4 @@ def test_user_registration_form():
         'NCR',
         'Delhi',
     )
+
